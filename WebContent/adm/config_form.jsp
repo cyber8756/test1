@@ -18,10 +18,7 @@
  		cf_admin_email=rs.getString(3);
  	}
  
- %>
- 
- 
- 
+ %> 
     
 <%!String sub_menu="100100";%>
 <%!String pg_anchor="<ul class=\"anchor\">"+
@@ -57,8 +54,7 @@
     		<col>
     		<col class="grid_4">
     		<col>
-    	</colgroup>
-    	   
+    	</colgroup>    	   
     	
     	<tbody>
     	<tr>
@@ -79,14 +75,7 @@
     		<input type="text" name="cf_admin_email" value="<%=cf_admin_email %>" id="cf_admin_email" required class="required email frm_input" size="40"> 
     		</td> 
     	</tr>
-    		
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+    		 	
     	
     	</table> 
     </div>    

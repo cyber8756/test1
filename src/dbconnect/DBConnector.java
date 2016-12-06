@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DBConnector {
 	String driver = "org.mariadb.jdbc.Driver";
-	String url = "jdbc:mariadb://sirgjw.gnutest.com:3306/sirgjw";
+	String url = "jdbc:mariadb://localhost:3306/sirgjw";
 	String uId = "sirgjw";
 	String uPwd = "8989";
 
@@ -45,7 +45,7 @@ public class DBConnector {
 			 * rs.getString("content")); }
 			 */
 
-			return rs;
+			
 		} catch (SQLException e) {
 			System.out.println("쿼리 수행 실패");
 		}
