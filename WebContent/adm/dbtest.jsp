@@ -9,7 +9,8 @@ Connection conn = null; //초기화
 PreparedStatement pstmt=null;
 ResultSet rs=null;
 	try {
-		String url = "jdbc:mariadb://localhost:3306/sirgjw"; // URL, "jdbc:mysql://localhost:3306/(mySql에서 만든 DB명)" << 입력 이때 3306은 mysql기본 포트
+		//String url = "jdbc:mariadb://localhost:3306/sirgjw"; // URL, "jdbc:mysql://localhost:3306/(mySql에서 만든 DB명)" << 입력 이때 3306은 mysql기본 포트
+		String url = "jdbc:mariadb://sirgjw.gnutest.com:3306/sirgjw";
 		String id = "sirgjw"; // SQL 사용자 이름
 		String pw = "ekffur123!@#"; // SQL 사용자 패스워드
 		Class.forName("org.mariadb.jdbc.Driver"); // DB와 연동하기 위해 DriverManager에 등록한다.
@@ -18,13 +19,14 @@ ResultSet rs=null;
 		
 		out.println("연결됨"); // 커넥션이 제대로 연결되면 수행된다.
 		
-	 	pstmt = conn.prepareStatement("select cf_title,cf_admin,cf_admin_email from g5_config");
+	 	pstmt = conn.prepareStatement("select cf_title,cf_admin,cf_admin_email,cf_admin_email_name from g5_config");
 		rs = pstmt.executeQuery();
 		
 		while(rs.next()){
 	 		out.println(rs.getString(1));
 	 		out.println(rs.getString(2));
 	 		out.println(rs.getString(3));
+	 		out.println(rs.getString(4));
 	 	} 
 	} catch (Exception e) { // 예외 처리
 
