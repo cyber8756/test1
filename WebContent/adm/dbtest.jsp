@@ -21,7 +21,7 @@
 		}
 	} catch (Exception e) { // 예외 처리
 
-		out.println("연결됨");
+		out.println("연결실패");
 		e.printStackTrace();
 	}
 %>
