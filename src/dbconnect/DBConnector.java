@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 
 
 
@@ -52,12 +53,30 @@ public class DBConnector {
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();		
-		} catch (SQLException e) {
+		}catch(SQLSyntaxErrorException e){
+			System.out.println("쿼리문법에러"+sql);
+		}catch (SQLException e) {
 			System.out.println("쿼리 수행 실패(select)"+sql);
 			e.printStackTrace();
 		}
+		
 		return rs;
 	}
+	
+	
+	public int insert(String sql){
+		int isSuccess=0;
+		try {
+			pstmt=con.prepareStatement(sql);
+			isSuccess=pstmt.executeUpdate();			
+		} catch (SQLException e) {
+			System.out.println("insert 에러");
+			e.printStackTrace();
+		}		
+		return isSuccess;
+	}
+	
+	
 	 
 	public void set(String sql){
 		try {
@@ -75,7 +94,7 @@ public class DBConnector {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();		
 		} catch (SQLException e) {
-			System.out.println("쿼리 수행 실패(set)");
+			System.out.println("쿼리 수행 실패(create)");
 		}
 	}
 	

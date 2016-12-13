@@ -1,3 +1,5 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.net.InetAddress" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,6 +15,11 @@ InetAddress inet = InetAddress.getLocalHost();
 
 String svrIP = inet.getHostAddress();
 
-out.print(svrIP);
+out.println(svrIP);
+
+String G5_TIME_YMDHIS=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+
+out.print(G5_TIME_YMDHIS);
+
 %></body>
 </html>
