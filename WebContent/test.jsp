@@ -26,16 +26,16 @@ out.print(G5_TIME_YMDHIS);
 
 <%
 out.println("폴더생성테스트");
-String data_path=getServletContext().getRealPath("/data");
-	String[] dir_arr={data_path+"/WebContent/cache",
-			data_path+"/WebContent/editor",
-			data_path+"/WebContent/file",
-			data_path+"/WebContent/log",
-			data_path+"/WebContent/member",
-			data_path+"/WebContent/session",
-			data_path+"/WebContent/content",
-			data_path+"/WebContent/faq",
-			data_path+"/WebContent/tmp"};
+String data_path=getServletContext().getRealPath("/WebContent/data");
+	String[] dir_arr={data_path+"/cache",
+			data_path+"/editor",
+			data_path+"/file",
+			data_path+"/log",
+			data_path+"/member",
+			data_path+"/session",
+			data_path+"/content",
+			data_path+"/faq",
+			data_path+"/tmp"};
 	
 	
 for(int i=0;i<dir_arr.length;i++){
