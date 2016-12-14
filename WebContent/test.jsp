@@ -41,7 +41,9 @@ String data_path=getServletContext().getRealPath("/WebContent/data");
 for(int i=0;i<dir_arr.length;i++){
 	out.println("폴더경로명="+dir_arr[i]);
 	File file = new File(dir_arr[i]);
-	file.mkdirs();
+	boolean a=file.mkdirs();
+	if(a==true) out.println("폴더생성성공");
+	else out.println("폴더생성실패");
 	Runtime rt = Runtime.getRuntime();
 	String cmd="chmod 0755" +data_path;
 	Process p=rt.exec(cmd);
