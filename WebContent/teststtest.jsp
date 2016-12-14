@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.net.InetAddress" %>
@@ -21,5 +22,42 @@ String G5_TIME_YMDHIS=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calenda
 
 out.print(G5_TIME_YMDHIS);
 
-%></body>
+%>
+
+<%
+out.println("폴더생성테스트");
+String data_path="C:\\Users\\SIR\\Desktop\\yc5";
+	String[] dir_arr={data_path+"/cache",
+			data_path+"/editor",
+			data_path+"/file",
+			data_path+"/log",
+			data_path+"/member",
+			data_path+"/session",
+			data_path+"/content",
+			data_path+"/faq",
+			data_path+"/tmp"};
+	
+	
+for(int i=0;i<dir_arr.length;i++){
+	File file = new File(dir_arr[i]);
+	file.mkdir();
+	Runtime rt = Runtime.getRuntime();
+	String cmd="chmod 0755" +data_path;
+	Process p=rt.exec(cmd);
+	p.waitFor();
+}	
+	
+	
+%>
+<li>디렉토리생성완료</li>
+
+</body>
 </html>
+
+
+
+
+
+
+
+

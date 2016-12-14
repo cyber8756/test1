@@ -1,3 +1,5 @@
+<%@page import="java.io.BufferedWriter"%>
+<%@page import="java.io.FileWriter"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -441,10 +443,10 @@ if(g5_shop_install[0].equals("1")){
               
                 for(int i=0;i<bo_table.length;i++){
                 	sql="insert into "+table_prefix+"board"+
-                        "set bo_table = "+bo_table[i]+","+
+                        " set bo_table = '"+bo_table[i]+"',"+
                         "gr_id = 'shop',"+
-                        "bo_subject = "+bo_subject[i]+","+
-                        "bo_device = both,"+
+                        "bo_subject = '"+bo_subject[i]+"',"+
+                        "bo_device = 'both',"+
                         "bo_admin = '',"+
                         "bo_list_level = '1',"+
                         "bo_read_level = '1',"+
@@ -506,12 +508,18 @@ if(g5_shop_install[0].equals("1")){
                 	
                 	
                 	  isSuccess=dbc.insert(sql);
-                	  
-                	  sql=filelib.getFileContent(new File(getServletContext().getRealPath("../adm/sql_write.sql")));
+                	  //System.out.println("상대경로테스트 : "+getServletContext().getRealPath("/adm/sql_write.sql"));
+                	  sql=filelib.getFileContent(new File(getServletContext().getRealPath("/adm/sql_write.sql")));
+                	 // sql=filelib.getFileContent(new File("../adm/sql_write.sql"));
                 	  String create_table=table_prefix+"write_"+bo_table[i];
                 	  
+                	  System.out.println(create_table);
                 	  
-                	  
+                	// sql_board.sql 파일의 테이블명을 변환
+                   /*    $source = array("/__TABLE_NAME__/", "/;/");
+                      $target = array($create_table, "");
+                      $sql = preg_replace($source, $target, $sql);
+                      sql_query($sql, true, $dblink); */
                 	  
                 	  
                 	  
@@ -530,8 +538,10 @@ if(g5_shop_install[0].equals("1")){
 <!---------------------------------------------------------  -->
 <!--  디렉토리생성 -->
 <%
-String data_path="/data/";
-	String[] dir_arr={data_path+"/cache",
+String data_path=getServletContext().getRealPath("/data");
+                		System.out.println("data_path:"+data_path);
+	String[] dir_arr={
+			data_path+"/cache",
 			data_path+"/editor",
 			data_path+"/file",
 			data_path+"/log",
@@ -544,11 +554,149 @@ String data_path="/data/";
 	
 for(int i=0;i<dir_arr.length;i++){
 	File file = new File(dir_arr[i]);
-	file.mkdir();
+	
+	file.mkdirs();
 }	
 	
 	
 %>
+<li>디렉토리생성완료</li>
+
+<%
+String G5_DATA_DIR="data";
+String G5_DBCONFIG_FILE="dbonfig.properties";
+
+File file = new File(getServletContext().getRealPath("/"+G5_DATA_DIR+"/"+G5_DBCONFIG_FILE));
+boolean success=file.createNewFile();
+if(success==true)System.out.println("컨피그파일생성완료");
+FileWriter fw = new FileWriter(file);
+BufferedWriter bw = new BufferedWriter(fw);
+
+bw.write("#db infomation");
+bw.write("G5_MYSQL_HOST="+mysql_host);bw.newLine();
+bw.write("G5_MYSQL_USER="+mysql_user);bw.newLine();
+bw.write("G5_MYSQL_PASSWORD="+mysql_pass);bw.newLine();
+bw.write("G5_MYSQL_DB="+mysql_db);bw.newLine();bw.newLine();
+bw.write("G5_MYSQL_SET_MODE="+mysql_set_mode);bw.newLine();
+bw.write("G5_TALE_PREFIX="+table_prefix);bw.newLine();
+bw.write("G5[write_prefix]="+table_prefix+"write_");bw.newLine();
+bw.write("G5[auth_table]="+table_prefix+"auth");bw.newLine();
+bw.write("G5[config_table]="+table_prefix+"config");bw.newLine();
+bw.write("G5[group_table]="+table_prefix+"group");bw.newLine();
+bw.write("G5[group_member_table]="+table_prefix+"group_member");bw.newLine();
+bw.write("G5[board_table]="+table_prefix+"board");bw.newLine();
+bw.write("G5[board_file_table]="+table_prefix+"board_file");bw.newLine();
+bw.write("G5[board_good_table]="+table_prefix+"board_good");bw.newLine();
+bw.write("G5[board_new_table]="+table_prefix+"board_new");bw.newLine();
+bw.write("G5[login_table]="+table_prefix+"login");bw.newLine();
+bw.write("G5[mail_table]="+table_prefix+"mail");bw.newLine();
+bw.write("G5[member_table]="+table_prefix+"member");bw.newLine();
+
+bw.write("G5[poll_table])="+table_prefix+"poll");bw.newLine();
+bw.write("G5[poll_etc_table])="+table_prefix+"poll_etc");bw.newLine();
+bw.write("G5[point_table])="+table_prefix+"point");bw.newLine();
+bw.write("G5[popular_table])="+table_prefix+"popular");bw.newLine();
+bw.write("G5[scrap])="+table_prefix+"scrap");bw.newLine();
+bw.write("G5[visit_table])="+table_prefix+"visit");bw.newLine();
+bw.write("G5[uniqid_table])="+table_prefix+"uniqid");bw.newLine();
+
+bw.write("G5[autosave_table])="+table_prefix+"autosave");bw.newLine();
+bw.write("G5[cert_history_table])="+table_prefix+"cert_history");bw.newLine();
+bw.write("G5[qa_config_table])="+table_prefix+"qa_config");bw.newLine();
+bw.write("G5[content+_table])="+table_prefix+"content");bw.newLine();
+bw.write("G5[menu_talbe])="+table_prefix+"menu");bw.newLine();
+
+
+
+
+
+
+if(g5_shop_install[0].equals("1")){
+	bw.write("G5_USE_SHOP=true");bw.newLine();
+	bw.write("G5_shop_table_prefix="+g5_shop_prefix);bw.newLine();
+	bw.write("G5[g5_shop_default_table]="+g5_shop_prefix+"default");bw.newLine();
+	bw.write("G5[g5_shop_banner_table]="+g5_shop_prefix+"banner");bw.newLine();
+	bw.write("G5[g5_shop_cart_table]="+g5_shop_prefix+"cart");bw.newLine();
+	bw.write("G5[g5_shop_category_table]="+g5_shop_prefix+"category");bw.newLine();
+	bw.write("G5[g5_shop_event_table]="+g5_shop_prefix+"event");bw.newLine();
+	
+	bw.write("G5[g5_shop_event_item_table]="+g5_shop_prefix+"event_item");bw.newLine();
+	bw.write("G5[g5_shop_item_table]="+g5_shop_prefix+"item");bw.newLine();
+	bw.write("G5[g5_shop_item_option_table]="+g5_shop_prefix+"item_option");bw.newLine();
+	bw.write("G5[g5_shop_item_use_table]="+g5_shop_prefix+"item_use");bw.newLine();
+	bw.write("G5[g5_shop_item_qa_table]="+g5_shop_prefix+"item_qa");bw.newLine();
+	bw.write("G5[g5_shop_item_relation_table]="+g5_shop_prefix+"item_relation");bw.newLine();
+	
+	bw.write("G5[g5_shop_order_table]="+g5_shop_prefix+"order");bw.newLine();
+	bw.write("G5[g5_shop_order_delete_table]="+g5_shop_prefix+"order_delete");bw.newLine();
+	bw.write("G5[g5_shop_wish_table]="+g5_shop_prefix+"wish");bw.newLine();
+	bw.write("G5[g5_shop_coupon_table]="+g5_shop_prefix+"coupon");bw.newLine();
+	
+	bw.write("G5[g5_shop_coupon_zone=table]="+g5_shop_prefix+"coupon_zone");bw.newLine();
+	bw.write("G5[g5_shop_coupon_log_table]="+g5_shop_prefix+"coupon_log");bw.newLine();
+	bw.write("G5[g5_shop_coupon_table]="+g5_shop_prefix+"coupon_wsendcost_ta");bw.newLine();
+	bw.write("G5[g5_shop_personalpay_table]="+g5_shop_prefix+"personalpay");bw.newLine();
+
+	bw.write("G5[g5_shop_personalpay_table]="+g5_shop_prefix+"personalpay");bw.newLine();
+	bw.write("G5[g5_order_address_table]="+g5_shop_prefix+"order_address");bw.newLine();
+	bw.write("G5[g5_item_stocksms_table]="+g5_shop_prefix+"stocksms");bw.newLine();
+	
+	bw.write("G5[g5_item_stocksms_table]="+g5_shop_prefix+"stocksms");bw.newLine();
+	bw.write("G5[g5_shop_order_data_table]="+g5_shop_prefix+"order_data");bw.newLine();
+	bw.write("G5[g5_shop_inicis_log_table]="+g5_shop_prefix+"inicis_log");bw.newLine();	
+	
+		
+}
+
+bw.flush();
+file= new File(getServletContext().getRealPath("/"+G5_DATA_DIR+"/.htaccess"));
+file.createNewFile();
+fw=new FileWriter(file);
+bw=new BufferedWriter(fw);
+String str="<FilesMatch \"\\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll])\">"+
+"Order allow,deny"+
+"Deny from all"+
+"</FilesMatch>";
+
+bw.write(str);
+bw.flush();
+bw.close();
+fw.close();
+
+
+%>
+
+<li>컨피그설정파일 완료였으면</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -16,8 +16,8 @@ public class FileLib {
 	public String getFileContent(File file){
 		try {
 			
-		/* 테스트 경로 확인용
-		 * System.out.println(file.getCanonicalPath());*/
+		
+		  System.out.println("경로확인용"+file.getPath());
 			
 			fileReader = new FileReader(file);
 			bufferedReader = new BufferedReader(fileReader); 
