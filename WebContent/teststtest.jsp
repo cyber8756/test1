@@ -39,6 +39,7 @@ String data_path=getServletContext().getRealPath("/data");
 	
 	
 for(int i=0;i<dir_arr.length;i++){
+	System.out.println("폴더경로명="+dir_arr[i]);
 	File file = new File(dir_arr[i]);
 	file.mkdirs();
 	Runtime rt = Runtime.getRuntime();
