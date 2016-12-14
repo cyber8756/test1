@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-FileLib filelib= new FileLib();
+FileLib fileLib= new FileLib();
 File file = new File(getServletContext().getRealPath("/LICENSE.txt"));	
 %>
 <form action="./install_config.jsp" method="post" onsubmit="return frm_submit(this);">
@@ -15,7 +15,7 @@ File file = new File(getServletContext().getRealPath("/LICENSE.txt"));
 			</p>
 
 			<div class="ins_ta ins_license">
-				<textarea name="textarea" id="ins_license" readonly><%=filelib.getFileContent(file) %></textarea>
+				<textarea name="textarea" id="ins_license" readonly><%=fileLib.getFileContent(file) %></textarea>
 			</div>
 
 			<div id="ins_agree">
