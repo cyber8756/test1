@@ -54,7 +54,7 @@ public class DBConnector {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();		
 		}catch(SQLSyntaxErrorException e){
-			System.out.println("쿼리문법에러"+sql);
+			System.out.println("쿼리문법에러:"+sql);
 		}catch (SQLException e) {
 			System.out.println("쿼리 수행 실패(select)"+sql);
 			e.printStackTrace();
