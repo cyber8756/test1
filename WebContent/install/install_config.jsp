@@ -5,7 +5,7 @@
 request.setCharacterEncoding("utf-8");
 response.setContentType("text/html; charset=utf-8");
 %>    
-    
+  
 <%
 String agree=request.getParameter("agree");
 if(agree==null ||agree!="동의함"){

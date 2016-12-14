@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 
-
+ 
 
 public class DBConnector {
 	String driver = "org.mariadb.jdbc.Driver";

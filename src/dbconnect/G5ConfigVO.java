@@ -5,7 +5,7 @@ public class G5ConfigVO {
 	cf_intercept_ip,cf_analytics,cf_add_meta,cf_syndi_token,cf_syndi_except,cf_image_extension,cf_flash_extension,cf_movie_extension,cf_filter,
 	cf_prohibit_id,cf_prohibit_email,cf_stipulation,cf_privacy,cf_cert_kcb_cd,cf_cert_kcp_cd,cf_lg_mid,cf_lg_mert_key,cf_facebook_appid,
 	cf_facebook_secret,cf_twitter_key,cf_twitter_secret,cf_googl_shorturl_apikey,cf_kakao_js_apikey,cf_add_script,cf_icode_id,cf_icode_pw,cf_icode_server_ip;
-	
+	 
 	
 	
 	private int cf_use_point,cf_login_point,cf_memo_send_point,cf_cut_name,cf_nick_modify,cf_open_modify,cf_new_del,

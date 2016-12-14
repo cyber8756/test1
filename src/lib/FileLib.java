@@ -2,15 +2,20 @@ package lib;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class FileLib {
 
-
+ 
 	private FileReader fileReader;
 	private BufferedReader bufferedReader;
+	private FileInputStream fis;
+	private FileOutputStream fos;
+	
 	private String str;
 
 	public String getFileContent(File file){
@@ -25,8 +30,7 @@ public class FileLib {
 			str= new String();
 			String s;
 			while((s=bufferedReader.readLine())!=null){
-				str += s+System.getProperty("line.separator");
-				
+				str += s+System.getProperty("line.separator");				
 			}
 			
 		}catch (FileNotFoundException e) {
@@ -79,6 +83,32 @@ public class FileLib {
 		}	
 		return str;
 	}
+	
+	
+	
+	public void copyFile(String inputName,String destination){
+		
+		try {
+			fis=new FileInputStream(inputName);
+			fos=new FileOutputStream(destination);
+			
+			int data;
+			byte[] readby=new byte[200];
+			while((data=fis.read(readby))!=-1){
+				fos.write(readby,0,data);
+			}
+			fos.flush();
+			fos.close();
+			fis.close();
+			
+		} catch (FileNotFoundException e) {			
+			e.printStackTrace();
+		}catch(Exception e){
+			
+		}
+		
+		
+	}//copyFile
 	
 	
 	

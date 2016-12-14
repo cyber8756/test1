@@ -26,7 +26,7 @@ out.print(G5_TIME_YMDHIS);
 
 <%
 out.println("폴더생성테스트");
-String data_path="C:\\Users\\SIR\\Desktop\\yc5";
+String data_path=getServletContext().getRealPath("/data");
 	String[] dir_arr={data_path+"/cache",
 			data_path+"/editor",
 			data_path+"/file",
@@ -40,7 +40,7 @@ String data_path="C:\\Users\\SIR\\Desktop\\yc5";
 	
 for(int i=0;i<dir_arr.length;i++){
 	File file = new File(dir_arr[i]);
-	file.mkdir();
+	file.mkdirs();
 	Runtime rt = Runtime.getRuntime();
 	String cmd="chmod 0755" +data_path;
 	Process p=rt.exec(cmd);

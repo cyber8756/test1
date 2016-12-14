@@ -1,3 +1,6 @@
+<%@page import="java.security.acl.Owner"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.BufferedWriter"%>
 <%@page import="java.io.FileWriter"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,14 +22,7 @@ response.setContentType("text/html; charset=utf-8");
 FileLib filelib= new FileLib();
 %>    
     
-<%!
-public String implode(String glue, ArrayList<String> strs) {
-	String ret = "";
-	int strs_size = strs.size();
-	for(int i=0; i<strs_size; i++) ret += (i == strs_size - 1) ? strs.get(i) : strs.get(i) + glue;
-	return ret;
-}
-%>    
+   
     
 <%
 	
@@ -551,13 +547,39 @@ String data_path=getServletContext().getRealPath("/data");
 			data_path+"/faq",
 			data_path+"/tmp"};
 	
-	
+Runtime rt = Runtime.getRuntime();	
+
 for(int i=0;i<dir_arr.length;i++){
-	File file = new File(dir_arr[i]);
-	
+	File file = new File(dir_arr[i]);	
 	file.mkdirs();
+	 
+	Process p = rt.exec("chmod 755 "+dir_arr[i]); 
+	p.waitFor(); 
 }	
+
+
+
+if(g5_shop_install[0].equals("1")){
+	String[] shop_dir_arr={
+		data_path+"/banner",
+		data_path+"/common",
+		data_path+"/event",
+		data_path+"/item"			
+	};
 	
+	for(int i=0; i<shop_dir_arr.length;i++){
+		File file = new File(shop_dir_arr[i]);
+		file.mkdirs();
+		
+		Process p = rt.exec("chmod 755 "+shop_dir_arr[i]); 
+		p.waitFor(); 
+		
+	}
+	
+		
+}
+
+
 	
 %>
 <li>디렉토리생성완료</li>
@@ -649,13 +671,16 @@ if(g5_shop_install[0].equals("1")){
 }
 
 bw.flush();
+bw.close();
+fw.close();
+
 file= new File(getServletContext().getRealPath("/"+G5_DATA_DIR+"/.htaccess"));
 file.createNewFile();
 fw=new FileWriter(file);
 bw=new BufferedWriter(fw);
-String str="<FilesMatch \"\\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll])\">"+
-"Order allow,deny"+
-"Deny from all"+
+String str="<FilesMatch \"\\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll])\">"+System.getProperty("line.separator")+
+"Order allow,deny"+System.getProperty("line.separator")+
+"Deny from all"+System.getProperty("line.separator")+
 "</FilesMatch>";
 
 bw.write(str);
@@ -672,7 +697,40 @@ fw.close();
 
 
 
+<%
+if(g5_shop_install[0].equals("1")){
+ FileLib fileLib = new FileLib();
+ fileLib.copyFile(getServletContext().getRealPath("/install/logo_img"), getServletContext().getRealPath("/data/common/logo_img"));
+ fileLib.copyFile(getServletContext().getRealPath("/install/logo_img"), getServletContext().getRealPath("/data/common/logo_img2"));
+ fileLib.copyFile(getServletContext().getRealPath("/install/mobile_logo_img"), getServletContext().getRealPath("/data/common/mobile_logo_img"));
+ fileLib.copyFile(getServletContext().getRealPath("/install/mobile_logo_img"), getServletContext().getRealPath("/data/common/mobile_logo_img2"));
+			
+}
 
+%>
+
+</ol>
+
+    <p>축하합니다. <?php echo G5_VERSION ?> 설치가 완료되었습니다.</p>
+
+</div>
+
+<div class="ins_inner">
+
+    <h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
+
+    <ol>
+        <li>메인화면으로 이동</li>
+        <li>관리자 로그인</li>
+        <li>관리자 모드 접속</li>
+        <li>환경설정 메뉴의 기본환경설정 페이지로 이동</li>
+    </ol>
+
+    <div class="inner_btn">
+        <a href="../index.php">새로운 그누보드5로 이동</a>
+    </div>
+
+</div>
 
 
 
